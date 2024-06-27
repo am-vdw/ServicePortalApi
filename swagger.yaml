@@ -1,0 +1,128 @@
+swagger: '2.0'
+info:
+  description: API per ottenere informazioni sui pezzi
+  version: 1.0.0
+  title: Parts API
+host: 'api.example.com'
+basePath: '/v1'
+schemes:
+  - 'https'
+paths:
+  /getParts:
+    get:
+      summary: Ottenere informazioni sui pezzi
+      description: |
+        Questa API permette di ottenere informazioni sui pezzi basandosi sui parametri forniti.
+      produces:
+        - application/json
+      parameters:
+        - name: SellingCompanyCode
+          in: query
+          description: Codice dell'azienda venditrice
+          required: true
+          type: string
+        - name: UserId
+          in: query
+          description: ID dell'utente
+          required: true
+          type: string
+        - name: CustomerCode
+          in: query
+          description: Codice cliente AX
+          required: true
+          type: string
+        - name: Parts
+          in: body
+          description: Array di oggetti parte
+          required: true
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                PartCode:
+                  type: string
+                  description: Codice parte
+                ManufacturerCompany:
+                  type: string
+                  description: Azienda produttrice
+                Quantity:
+                  type: number
+                  description: Quantità
+      responses:
+        200:
+          description: Risposta OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                PartCode:
+                  type: string
+                  description: Codice parte
+                ManufacturerCompany:
+                  type: string
+                  description: Azienda produttrice
+                Status:
+                  type: string
+                  description: Stato del pezzo
+                AlternativePartCode:
+                  type: string
+                  description: Codice parte alternativa
+        207:
+          description: Risposta Multi-Status
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                PartCode:
+                  type: string
+                  description: Codice parte
+                ManufacturerCompany:
+                  type: string
+                  description: Azienda produttrice
+                Status:
+                  type: string
+                  description: Stato del pezzo
+                AlternativePartCode:
+                  type: string
+                  description: Codice parte alternativa
+                ErrorMessage:
+                  type: string
+                  description: Messaggio di errore, se presente
+        400:
+          description: Richiesta non valida
+        500:
+          description: Errore interno del server
+definitions:
+  PartRequest:
+    type: object
+    properties:
+      PartCode:
+        type: string
+        description: Codice parte
+      ManufacturerCompany:
+        type: string
+        description: Azienda produttrice
+      Quantity:
+        type: number
+        description: Quantità
+  PartResponse:
+    type: object
+    properties:
+      PartCode:
+        type: string
+        description: Codice parte
+      ManufacturerCompany:
+        type: string
+        description: Azienda produttrice
+      Status:
+        type: string
+        description: Stato del pezzo
+      AlternativePartCode:
+        type: string
+        description: Codice parte alternativa
+      ErrorMessage:
+        type: string
+        description: Messaggio di errore, se presente
